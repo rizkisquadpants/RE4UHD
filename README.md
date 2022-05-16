@@ -7,8 +7,8 @@
   <p align="center">
     <img src="https://img.shields.io/badge/Cheat Version-v1.1-red.svg">
   </a>
-  <a target="_blank" href="https://github.com/rizkisquadpants/OpenClash/releases">
-    <img src="https://img.shields.io/badge/Download Config-Klik Disini-blue.svg">
+  <a target="_blank" href="https://github.com/rizkisquadpants/RE4UHD/releases/tag/1.0.0.1">
+    <img src="https://img.shields.io/badge/Download Cheat-Klik Disini-blue.svg">
   </a>
   </p>
   
