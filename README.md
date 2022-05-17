@@ -16,6 +16,9 @@
 <p align="center">
 Trainer For Resident Evil 4 Ultimate HD Edition Version 1.0.6 Only
 </p>
+<p align="center">
+<img src="https://img.shields.io/badge/DONASI-Klik Disini-green.svg">
+</p>
 
 ## About
 
