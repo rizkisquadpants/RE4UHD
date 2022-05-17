@@ -31,7 +31,7 @@ Cheat Ini Menggunakan Sistem `Internal Injection` Apabila D3D Tidak muncul atau 
 </h1>
  
  
-### Fitur Cheat Versi 1.1
+### Fitur Cheat
 
 
 <h1 align="center">
