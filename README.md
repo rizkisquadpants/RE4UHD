@@ -7,7 +7,7 @@
   <p align="center">
     <img src="https://img.shields.io/badge/Cheat Version-v1.0.0.2-red.svg">
   </a>
-  <a target="_blank" href="https://github.com/rizkisquadpants/RE4UHD/releases/tag/1.0.0.1">
+  <a target="_blank" href="https://github.com/rizkisquadpants/RE4UHD/releases/tag/1.0.0.2">
     <img src="https://img.shields.io/badge/Download Cheat-Klik Disini-blue.svg">
   </a>
   </p>
@@ -17,7 +17,9 @@
 Trainer For Resident Evil 4 Ultimate HD Edition Version 1.0.6 Only
 </p>
 <p align="center">
-<img src="https://img.shields.io/badge/DONASI-Klik Disini-green.svg">
+<a target="_blank" href="https://sociabuzz.com/rizkikotet/tribe">
+    <img src="https://img.shields.io/badge/DONASI-Klik Disini-green.svg">
+  </a>
 </p>
 
 ## About
