@@ -5,9 +5,9 @@
 </h1>
 
   <p align="center">
-    <img src="https://img.shields.io/badge/Cheat Version-v1.0.0.7-red.svg">
+    <img src="https://img.shields.io/badge/Cheat Version-v1.0.0.8-red.svg">
   </a>
-  <a target="_blank" href="https://github.com/rizkisquadpants/RE4UHD/releases/tag/1.0.0.7">
+  <a target="_blank" href="https://github.com/rizkisquadpants/RE4UHD/releases/tag/1.0.0.8">
     <img src="https://img.shields.io/badge/Download Cheat-Klik Disini-blue.svg">
   </a>
   </p>
