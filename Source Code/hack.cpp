@@ -307,6 +307,24 @@ void MainHack()
 				*(FLOAT*)AddrBypassPRL2 = By2;
 			}
 		}
+
+		if (opt_OneHitKill == 1)
+		{
+			OneHit.Patch();
+		}
+		else
+		{
+			OneHit.Restore();
+		}
+
+		if (opt_FrezzeEnemie == 1)
+		{
+			FreezeEnemi.Patch();
+		}
+		else
+		{
+			FreezeEnemi.Restore();
+		}
 	}
 }
 

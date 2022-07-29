@@ -157,6 +157,18 @@ void Menu::Render()
 			    {
 			        Features::OpenTypewriter(Features::TypewriterMode::SAVE);
 			    }
+
+				ImGui::Selectable("Skip Radio Cutscane", &Cheat::SkipCut);
+				if (Cheat::SkipCut)
+				{
+					chON();
+					Features::SkipRadioCutscenes(Cheat::SkipCut);
+				}
+				else
+				{
+					chOFF();
+					Features::SkipRadioCutscenes(Cheat::SkipCut);
+				}
 		}
 
 		// Dumper Tab

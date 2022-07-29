@@ -8,6 +8,7 @@ namespace Cheat
 {
     int Money;
     int ItmDifficulty;
+    bool SkipCut;
 
     bool InfiniteHealth;
     bool Invincible;
