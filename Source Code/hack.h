@@ -81,6 +81,10 @@ namespace Features
 
 	std::uint16_t GetHealthLimit();
 
+	bool IsLuisPresent();
+
+	void AshleyLuis(bool toggle);
+
 	bool IsAshleyPresent();
 
 	void ToggleAshley(bool toggle);

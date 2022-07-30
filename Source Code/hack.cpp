@@ -467,10 +467,6 @@ namespace Features
 	{
 		constexpr float kPi = 3.14159265358979323846264f;
 		constexpr const wchar_t* kProcessName = L"bio4.exe";
-		IDirect3DDevice9** gDirect3D9Device; //bio4.exe+CECB28
-		ID3DXFont* gOverlayFont;
-		ID3DXSprite* gOverlaySprite;
-		std::uint32_t* gD3DDeviceVTable; //d3d9.dll+5A102
 		float* gAspectRatio; //bio4.exe+71377C
 		Camera* gCamera; //bio4.exe+19F5B7
 		Pointer gHealthBase; //bio4.exe+806F3C
@@ -483,10 +479,7 @@ namespace Features
 		Pointer gEnemyVTable; //bio4.exe+71035C. VTable for enemies that can be meelee'd
 		Entity** gPlayerNode; //bio4.exe+857054
 		void* gRadioFunctionPatchLocation; //bio4.exe+369D66
-		void(__cdecl* gOriginalClipFunction)(Entity* entity, void*); //bio4.exe+192E40
 		void(__cdecl* gOpenMerchant)(std::int32_t, std::int32_t);
-		HRESULT(__stdcall* gEndSceneOriginal)(IDirect3DDevice9*);
-		HRESULT(__stdcall* gResetOriginal)(IDirect3DDevice9*, D3DPRESENT_PARAMETERS*);
 	}
 
 
@@ -535,24 +528,24 @@ namespace Features
 		return;
 	}
 
-	void __cdecl ClippingFunctionHook(Entity* entity, void* arg2)
+	/*void __cdecl ClippingFunctionHook(Entity* entity, void* arg2)
 	{
 		if (entity != *gPlayerNode)
 			gOriginalClipFunction(entity, arg2);
-	}
+	}*/
 
 	bool Initialize()
 	{
-		Pointer clippingFunctionCall;
+		//Pointer clippingFunctionCall;
 		std::vector<std::future<void>> scanFutures;
 
-		scanFutures.push_back(std::async(std::launch::async, patternScan<IDirect3DDevice9**>, std::ref(gDirect3D9Device), "A1 ????????  8B 08  8B 91 70010000  56  50  FF D2  89 77 04", kProcessName));
-		scanFutures.push_back(std::async(std::launch::async, patternScan<std::uint32_t*>, std::ref(gD3DDeviceVTable), "C7 06 ????????  89 86 ????????  89 86 ????????  89 86 ????????  89 86 ????????", L"d3d9.dll"));
+		//scanFutures.push_back(std::async(std::launch::async, patternScan<IDirect3DDevice9**>, std::ref(gDirect3D9Device), "A1 ????????  8B 08  8B 91 70010000  56  50  FF D2  89 77 04", kProcessName));
+		//scanFutures.push_back(std::async(std::launch::async, patternScan<std::uint32_t*>, std::ref(gD3DDeviceVTable), "C7 06 ????????  89 86 ????????  89 86 ????????  89 86 ????????  89 86 ????????", L"d3d9.dll"));
 		scanFutures.push_back(std::async(std::launch::async, patternScan<float*>, std::ref(gAspectRatio), "D9 05 ????????  D9 5C 24 04  D9 81 ????????  8B CE", kProcessName));
 		scanFutures.push_back(std::async(std::launch::async, patternScan<Camera*>, std::ref(gCamera), "B9 ????????  5B E9  ????????  CC", kProcessName));
 		scanFutures.push_back(std::async(std::launch::async, patternScan<Pointer>, std::ref(gHealthBase), "A1 ????????  83 C0 60  6A 10  50  E8", kProcessName));
 		scanFutures.push_back(std::async(std::launch::async, patternScan<Pointer>, std::ref(gPlayerBase), "B9 ????????  E8 ????????  8B 35 ????????  81", kProcessName));
-		scanFutures.push_back(std::async(std::launch::async, patternScan<Pointer>, std::ref(clippingFunctionCall), "E8 ????????  D9 86 ????????  8B 4D 10", kProcessName));
+		//scanFutures.push_back(std::async(std::launch::async, patternScan<Pointer>, std::ref(clippingFunctionCall), "E8 ????????  D9 86 ????????  8B 4D 10", kProcessName));
 		scanFutures.push_back(std::async(std::launch::async, patternScan<Pointer>, std::ref(gTmpFireRate), "D9 05 ????????  D9 45 D4  D8D1  DFE0  DDD9  F6 C4 41", kProcessName));
 		scanFutures.push_back(std::async(std::launch::async, patternScan<Pointer>, std::ref(gLinkedList), "BB ????????  E8 ????????  89 45 FC  EB 03  8B 45 FC", kProcessName));
 		scanFutures.push_back(std::async(std::launch::async, patternScan<Pointer>, std::ref(gTypewriterProcedure), "55  8B EC  A1 ????????  81 88 28500000 00080000", kProcessName));
@@ -564,15 +557,9 @@ namespace Features
 		for (auto& future : scanFutures)
 			future.wait();
 
-		if (!(gDirect3D9Device && gD3DDeviceVTable && gAspectRatio && gCamera && gHealthBase && gPlayerBase && clippingFunctionCall && gTmpFireRate && gLinkedList && gTypewriterProcedure && gEntityList && gEnemyVTable && gOpenMerchant && gRadioFunctionPatchLocation))
+		if (!(gAspectRatio && gCamera && gHealthBase && gPlayerBase  && gTmpFireRate && gLinkedList && gTypewriterProcedure && gEntityList && gEnemyVTable && gOpenMerchant && gRadioFunctionPatchLocation))
 			return false;
 
-		gDirect3D9Device = getValue<IDirect3DDevice9**>(addBytes(gDirect3D9Device, 1));
-		if (D3DXCreateFontA(*gDirect3D9Device, 18, 9, FW_NORMAL, 0, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS,
-			DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Arial", &gOverlayFont) != S_OK)
-			return false;
-		if (D3DXCreateSprite(*gDirect3D9Device, &gOverlaySprite) != S_OK)
-			return false;
 		gAspectRatio = getValue<float*>(addBytes(gAspectRatio, 2));
 		gCamera = pointerPath<Camera>(gCamera, 1, 4);
 		gHealthBase = pointerPath<std::remove_pointer_t<Pointer>>(gHealthBase, 0x1, 0x0);
@@ -582,19 +569,19 @@ namespace Features
 		gPlayerNode = getValue<Entity**>(addBytes(gEntityList, 17));
 		gEntityList = getValue<Entity**>(addBytes(gEntityList, 2));
 		gEnemyVTable = getValue<Pointer>(gEnemyVTable + 2);
-		gD3DDeviceVTable = getValue<std::uint32_t*>(addBytes(gD3DDeviceVTable, 2));
-		gClipFunctionHookLocation = follow(clippingFunctionCall);
-		gOriginalClipFunction = follow<decltype(gOriginalClipFunction)>(gClipFunctionHookLocation);
-		gEndSceneOriginal = getValue<decltype(gEndSceneOriginal)>(gD3DDeviceVTable + 42);
-		gResetOriginal = getValue<decltype(gResetOriginal)>(gD3DDeviceVTable + 16);
+		//gD3DDeviceVTable = getValue<std::uint32_t*>(addBytes(gD3DDeviceVTable, 2));
+		//gClipFunctionHookLocation = follow(clippingFunctionCall);
+		//gOriginalClipFunction = follow<decltype(gOriginalClipFunction)>(gClipFunctionHookLocation);
+		//gEndSceneOriginal = getValue<decltype(gEndSceneOriginal)>(gD3DDeviceVTable + 42);
+		//gResetOriginal = getValue<decltype(gResetOriginal)>(gD3DDeviceVTable + 16);
 
 		return true;
 	}
 
 	void Terminate()
 	{
-		gOverlaySprite->Release();
-		gOverlayFont->Release();
+		//gOverlaySprite->Release();
+		//gOverlayFont->Release();
 		SkipRadioCutscenes(false);
 		ToggleClipping(false);
 		ToggleFastTmp(false);
@@ -710,6 +697,31 @@ namespace Features
 		return getValue<std::uint16_t>(gHealthBase + HealthBaseOffsets::MaxHealth);
 	}
 
+	bool IsLuisPresent()
+	{
+		return *(DWORD*)AddrAshleyLuis == 0x90489090;
+	}
+
+	void AshleyLuis(bool toggle)
+	{
+		if (Entity* playerEntity = *gPlayerNode)
+		{
+			if (toggle == true)
+			{
+				AshleyToLuis.Patch();
+				setValue<Coordinates>(gHealthBase + HealthBaseOffsets::SceneEntryX, playerEntity->mCoords);
+				setValue<float>(gHealthBase + HealthBaseOffsets::Rotation, playerEntity->mRotation);
+				setValue<GameState>(gHealthBase + HealthBaseOffsets::Status, GameState::ChangingScene);
+			}
+			else
+			{
+				AshleyToLuis.Restore();
+				setValue<Coordinates>(gHealthBase + HealthBaseOffsets::SceneEntryX, playerEntity->mCoords);
+				setValue<float>(gHealthBase + HealthBaseOffsets::Rotation, playerEntity->mRotation);
+				setValue<GameState>(gHealthBase + HealthBaseOffsets::Status, GameState::ChangingScene);
+			}
+		}
+	}
 
 	bool IsAshleyPresent()
 	{

@@ -228,6 +228,7 @@ void Menu::Render()
 			}
 
 			
+
 			if (ImGui::Button("ASHLEY PRESENT SET"))
 			{
 				Features::ToggleAshley(Cheat::AshleyPresent);
@@ -245,6 +246,31 @@ void Menu::Render()
 				ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
 				ImGui::Text("Ashley Present");
 				ImGui::PopStyleColor();
+				if (ImGui::Button("ASHLEY TO LUIS SET"))
+				{
+					Features::AshleyLuis(Cheat::AshleyLuis);
+				}
+				else
+				{
+					Cheat::AshleyLuis = !Features::IsLuisPresent();
+				}
+				ImGui::SameLine();
+				ImGui::Selectable("Status", Features::IsLuisPresent());
+				if (Features::IsLuisPresent())
+				{
+					ImGui::SameLine();
+					ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
+					ImGui::Text("Luis");
+					ImGui::PopStyleColor();
+
+				}
+				else
+				{
+					ImGui::SameLine();
+					ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(245, 66, 66, 255)); // RED
+					ImGui::Text("Default");
+					ImGui::PopStyleColor();
+				}
 			}
 			else
 			{
@@ -253,6 +279,7 @@ void Menu::Render()
 				ImGui::Text("Ashley Not Present");
 				ImGui::PopStyleColor();
 			}
+
 			ImGui::Selectable("Teleport Ashley", &Cheat::AshleyTeleport);
 			if (Cheat::AshleyTeleport)
 			{

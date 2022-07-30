@@ -14,6 +14,8 @@ namespace Cheat
     bool Invincible;
     bool SetUpDown;
     bool WallHack;
+    bool AshleyLuis;
+    bool isLuisPresent;
     bool AshleyPresent;
     bool AshleyTeleport;
     float SpeedHack;

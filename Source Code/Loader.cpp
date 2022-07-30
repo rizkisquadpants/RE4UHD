@@ -83,7 +83,7 @@ int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             ImGui::NewFrame();
             Menu::Theme();
             {
-                ImGui::Begin("RTA CODE INJECTOR CHEAT", 0, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoResize);
+                ImGui::Begin("RTA CODE INJECTOR CHEAT", 0, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoResize );
                 {
                     Menu::Render();
                 }
